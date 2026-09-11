@@ -27,7 +27,7 @@ Web课程项目/
 ├── index.html          # 主页面
 ├── README.md           # 作业说明
 └── images/
-    └── photo.jpg       # 个人照片（相对路径 ./images/photo.jpg 引用）
+    └── photo.png       # 个人照片（相对路径 ./images/photo.png 引用）
 ```
 
 ## 四、运行方式
@@ -39,7 +39,7 @@ Web课程项目/
 ## 五、遇到的困难及解决方法
 
 1. **图片显示不出来。**
-   一开始把图片写成了绝对路径，换到别的电脑就打不开了。后来改成相对路径 `./images/photo.jpg`，并确认图片和 `index.html` 在同一个项目文件夹下，问题解决。
+   一开始把图片写成了绝对路径，换到别的电脑就打不开了。后来改成相对路径 `./images/photo.png`，并确认图片和 `index.html` 在同一个项目文件夹下，问题解决。
 
 2. **`target="_blank"` 忘记写。**
    检查代码时发现两个链接都是在本窗口打开。给 GitHub 链接补上 `target="_blank"`，就能在新标签页打开了。
