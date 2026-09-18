@@ -180,6 +180,18 @@ header.hero {
   background: var(--cyan);
 }
 
+/* Hero 标题：双层文字"聚光灯"
+   底层(.base)：暗色文字，平时呈现
+   上层(.spot)：同一份文字，青色填充，用径向渐变遮罩只露出鼠标附近的区域
+   遮罩圆心 --mx/--my 由 JS 随鼠标更新（带惯性插值） */
+.hero-title {
+  position: relative;
+  max-width: 780px;
+  margin: 0 auto;
+  --mx: 50%;
+  --my: 40%;
+}
+
 header.hero h1 {
   font-size: clamp(32px, 5.4vw, 52px);
   font-weight: 650;
@@ -187,7 +199,49 @@ header.hero h1 {
   letter-spacing: -0.5px;
 }
 
-/* 青色强调文字 */
+/* 底层：暗灰文字 */
+.hero-title h1.base {
+  color: rgba(242, 244, 245, 0.16);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.12);
+}
+
+.hero-title h1.base .grad {
+  color: inherit;
+}
+
+/* 上层：青色聚光灯 */
+.hero-title h1.spot {
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  background: radial-gradient(
+    170px circle at var(--mx) var(--my),
+    #5fffdd 0%,
+    var(--cyan) 38%,
+    rgba(23, 225, 197, 0.22) 68%,
+    transparent 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* 触屏 / 不支持 hover 的设备：退回普通样式 */
+@media (hover: none) {
+  .hero-title h1.base {
+    color: var(--text);
+    -webkit-text-stroke: 0;
+  }
+  .hero-title h1.base .grad {
+    color: var(--cyan);
+  }
+  .hero-title h1.spot {
+    display: none;
+  }
+}
+
+/* 渐变强调文字（非 hero 区域兜底用） */
 .grad {
   color: var(--cyan);
 }

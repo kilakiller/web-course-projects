@@ -24,7 +24,10 @@
 
     <div class="hero-body">
       <p class="hero-badge">HTML5 进阶综合训练 · 列表 / 表格 / 表单</p>
-      <h1>加入 <span class="grad">星辰社区</span><br>开启你的 AI 创作之旅</h1>
+      <div class="hero-title" id="hero-title">
+        <h1 class="base">加入 <span class="grad">星辰社区</span><br>开启你的 AI 创作之旅</h1>
+        <h1 class="spot" aria-hidden="true">加入 <span>星辰社区</span><br>开启你的 AI 创作之旅</h1>
+      </div>
       <p class="hero-sub">一个为创作者而生的社区。注册仅需一分钟，即可解锁云端创作工具、灵感广场与全天候智能助手。</p>
       <a class="hero-btn" href="#register">免费注册 →</a>
     </div>
@@ -310,6 +313,43 @@
       sec.classList.add("reveal");
       observer.observe(sec);
     });
+
+    // Hero 标题"聚光灯"效果：鼠标位置决定青色高亮的中心，带惯性跟随
+    // 原理：底层文字为暗色，上层同一份文字用 background-clip:text 填充青色，
+    // 并用径向渐变遮罩，遮罩圆心即鼠标位置；rAF 插值让跟随有阻尼感
+    (function () {
+      if (window.matchMedia("(hover: none)").matches) return; // 触屏设备不启用
+      var wrap = document.getElementById("hero-title");
+      if (!wrap) return;
+      var target = { x: 50, y: 40 };   // 目标位置（百分比）
+      var cur = { x: 50, y: 40 };      // 当前位置（缓动用）
+      var raf = null;
+
+      function tick() {
+        cur.x += (target.x - cur.x) * 0.13;
+        cur.y += (target.y - cur.y) * 0.13;
+        wrap.style.setProperty("--mx", cur.x.toFixed(2) + "%");
+        wrap.style.setProperty("--my", cur.y.toFixed(2) + "%");
+        // 距离足够近时停止动画，节省性能
+        if (Math.abs(target.x - cur.x) > 0.05 || Math.abs(target.y - cur.y) > 0.05) {
+          raf = requestAnimationFrame(tick);
+        } else {
+          raf = null;
+        }
+      }
+      function kick() { if (!raf) raf = requestAnimationFrame(tick); }
+
+      var hero = document.querySelector("header.hero");
+      hero.addEventListener("mousemove", function (e) {
+        var r = wrap.getBoundingClientRect();
+        target.x = ((e.clientX - r.left) / r.width) * 100;
+        target.y = ((e.clientY - r.top) / r.height) * 100;
+        kick();
+      });
+      hero.addEventListener("mouseleave", function () {
+        target.x = 50; target.y = 40; kick();
+      });
+    })();
   </script>
 </body>
 </html>
