@@ -6,3 +6,4 @@ report_preview/
 _shot*.js
 _args_*.json
 _sync_report.py
+_rebuild_report.py
