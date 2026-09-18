@@ -1,51 +1,44 @@
-# 第一次作业：个人简介
+# Web应用开发技术实验 · 课程作业仓库
 
-## 一、作业内容
+课程名称：Web应用开发技术实验（课程代号 F2431514）
+学生：钟腾　学号：24310210　班级：软工2402
+指导老师：罗恺韵
 
-本次作业是「实验1 HTML基础排版」，使用纯 HTML 制作一个"个人简介"页面，文件名为 `index.html`。
+> 目录约定：**一次实验 = 一个独立文件夹**，命名格式为 `实验N-主题/`，文件夹内自带 `index.html`、`style.css`（如有）、`README.md` 与 `images/` 截图。仓库根目录只放 `.gitignore` 和本说明。
 
-页面包含以下内容：
-
-| 模块 | 说明 |
-| --- | --- |
-| 主标题 | 使用 `<h1>` 写自己的姓名 |
-| 副标题 | 使用 `<h2>` 写"个人简介" |
-| 基本信息 | 使用 `<p>` 写一段自我介绍，并用 `<strong>`、`<em>` 标注关键词 |
-| 分割线 | 在主要模块之间使用 `<hr>` 分隔 |
-| 个人照片 | 使用 `<img>` 插入图片，并设置 `alt` 属性 |
-| 兴趣爱好 | 使用 `<p>` + `<br>` 实现换行排版 |
-| 联系方式 | 使用 `<a>` 添加 GitHub 主页和学校官网两个超链接，其中一个使用 `target="_blank"` |
-
-## 二、使用到的标签
-
-`<!DOCTYPE>`、`<html>`、`<head>`、`<meta>`、`<title>`、`<body>`、`<h1>`、`<h2>`、`<p>`、`<strong>`、`<em>`、`<hr>`、`<img>`、`<br>`、`<a>`，以及 HTML 注释 `<!-- -->`。
-
-## 三、目录结构
+## 目录结构
 
 ```
-Web课程项目/
-├── index.html          # 主页面
-├── README.md           # 作业说明
-└── images/
-    └── photo.png       # 个人照片（相对路径 ./images/photo.png 引用）
+web-course-projects/
+├── README.md                  # 仓库总览（本文件）
+├── .gitignore
+├── 实验1-个人简介/             # 实验1 HTML基础排版
+│   ├── index.html
+│   ├── README.md
+│   ├── screenshot.png
+│   └── images/
+│       └── photo.png
+└── 实验2-注册表单/              # 实验2 HTML5进阶综合训练
+    ├── index.html
+    ├── style.css
+    ├── README.md
+    └── images/
+        ├── 01-页面整体.png
+        ├── 02-提交数据收集.png
+        ├── 03-DevTools调试.png
+        └── 04-Console数据收集.png
 ```
 
-## 四、运行方式
+## 作业列表
 
-1. 用 VS Code 打开本文件夹；
-2. 右键 `index.html`，选择 **Open with Live Server**；
-3. 浏览器会自动打开页面，按 `F12` 可在 Elements 面板中查看 DOM 结构。
+| 实验 | 主题 | 主要内容 | 状态 |
+| --- | --- | --- | --- |
+| 实验1 | [个人简介](./实验1-个人简介/) | HTML 基础标签：标题、段落、`<strong>` / `<em>`、`<hr>`、`<img>`、`<a>` | 已完成 |
+| 实验2 | [用户注册页面](./实验2-注册表单/) | 列表（`<ul>` / `<ol>` / `<dl>`）、表格（`<thead>` / `<tbody>` / `rowspan` / `colspan`）、表单（各类 `<input>`、`<select>`、`<textarea>`、`required` / `pattern` 校验、FormData 数据收集） | 已完成 |
+| 实验3 | 待添加 | — | 未开始 |
 
-## 五、遇到的困难及解决方法
+## 运行方式
 
-1. **图片显示不出来。**
-   一开始把图片写成了绝对路径，换到别的电脑就打不开了。后来改成相对路径 `./images/photo.png`，并确认图片和 `index.html` 在同一个项目文件夹下，问题解决。
-
-2. **`target="_blank"` 忘记写。**
-   检查代码时发现两个链接都是在本窗口打开。给 GitHub 链接补上 `target="_blank"`，就能在新标签页打开了。
-
-3. **中文出现乱码。**
-   页面标题和正文的中文显示成乱码方块，原因是 `<head>` 中缺少编码声明。加上 `<meta charset="UTF-8">` 后正常显示。
-
-4. **标签没有正确闭合、缩进混乱。**
-   使用 VS Code 的格式化功能（`Shift + Alt + F`）统一缩进，并对照规范检查每个标签是否成对闭合。
+1. 用 VS Code 打开对应实验的文件夹；
+2. 右键 `index.html` → **Open with Live Server**；
+3. 按 `F12` 打开 DevTools 检查 DOM 结构与 Console 输出。

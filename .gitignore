@@ -1,3 +1,7 @@
 report_preview/
 *.docx
 .workbuddy/
+
+# 截图辅助脚本（本地工具，不入库）
+_shot*.js
+_args_*.json
