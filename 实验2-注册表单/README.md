@@ -4,6 +4,10 @@
 > 实验项目：实验2 HTML5进阶综合训练
 > 姓名：钟腾　学号：24310210　班级：软工2402　实验地点：E2-A504
 
+**🔗 在线浏览（GitHub Pages）**：<https://kilakiller.github.io/web-course-projects/%E5%AE%9E%E9%AA%8C2-%E6%B3%A8%E5%86%8C%E8%A1%A8%E5%8D%95/>
+
+**🎨 视觉设计**：页面 UI 参考主流 AI 产品官网（深色底、极光渐变光晕、玻璃拟态卡片、渐变文字、悬停发光、滚动淡入动画），全部使用纯 CSS（`backdrop-filter`、CSS 变量、`accent-color`、`clamp()`、`IntersectionObserver`）实现，未引入任何框架或外部资源。
+
 ## 一、作业内容
 
 使用 HTML5 制作一个完整的「用户注册」页面，综合运用**列表、表格、表单**三大模块的知识。

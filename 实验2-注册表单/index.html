@@ -3,30 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>用户注册 - HTML5进阶综合训练</title>
+  <title>星辰社区 · 加入 AI 创作者平台</title>
+  <meta name="description" content="星辰社区注册页面 —— HTML5 列表、表格、表单三大模块综合应用">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <!-- （1）页面整体结构：全部使用语义化标签 -->
-  <header>
-    <h1>欢迎注册 星辰社区</h1>
-    <p>HTML5 进阶综合训练 —— 列表、表格、表单三大模块综合应用</p>
-    <nav>
-      <ul>
+  <header class="hero">
+    <nav class="topbar">
+      <span class="logo">✦ 星辰社区</span>
+      <ul class="nav-links">
         <li><a href="#notice">注册须知</a></li>
         <li><a href="#steps">注册步骤</a></li>
         <li><a href="#register">填写资料</a></li>
         <li><a href="#rights">会员权益</a></li>
         <li><a href="#faq">常见问题</a></li>
       </ul>
+      <a class="nav-cta" href="#register">立即加入</a>
     </nav>
+
+    <div class="hero-body">
+      <p class="hero-badge">HTML5 进阶综合训练 · 列表 / 表格 / 表单</p>
+      <h1>加入 <span class="grad">星辰社区</span><br>开启你的 AI 创作之旅</h1>
+      <p class="hero-sub">一个为创作者而生的新一代社区。注册仅需 1 分钟，<br>即可解锁云端算力、灵感广场与 7×24 小时创作助手。</p>
+      <a class="hero-btn" href="#register">免费注册 →</a>
+    </div>
   </header>
 
   <main>
     <!-- （4）列表一：无序列表 ul —— 注册须知 -->
     <section id="notice">
-      <h2>一、注册须知</h2>
-      <ul>
+      <h2><small>01</small>注册须知</h2>
+      <ul class="glass-list">
         <li>请填写本人真实信息，邮箱与手机号将用于账号找回。</li>
         <li>密码长度为 6-16 位，建议包含字母与数字组合。</li>
         <li>头像支持 JPG、PNG 格式，单张大小不超过 2 MB。</li>
@@ -36,20 +44,20 @@
 
     <!-- （4）列表二：有序列表 ol —— 注册步骤 -->
     <section id="steps">
-      <h2>二、注册步骤</h2>
-      <ol>
-        <li>填写账号信息：用户名、密码、确认密码。</li>
-        <li>完善个人资料：性别、出生日期、所在城市。</li>
-        <li>填写联系方式：邮箱与手机号，用于接收验证码。</li>
-        <li>上传头像并勾选兴趣爱好，撰写个人简介。</li>
-        <li>勾选协议后点击"注册"按钮提交表单。</li>
+      <h2><small>02</small>注册步骤</h2>
+      <ol class="glass-steps">
+        <li><strong>填写账号信息</strong>：用户名、密码、确认密码。</li>
+        <li><strong>完善个人资料</strong>：性别、出生日期、所在城市。</li>
+        <li><strong>填写联系方式</strong>：邮箱与手机号，用于接收验证码。</li>
+        <li><strong>上传头像</strong>并勾选兴趣爱好，撰写个人简介。</li>
+        <li><strong>勾选协议</strong>后点击"注册"按钮提交表单。</li>
       </ol>
     </section>
 
     <!-- （2）注册表单：核心部分 -->
     <section id="register">
-      <h2>三、填写注册信息</h2>
-      <form id="register-form" action="#" method="post" enctype="multipart/form-data">
+      <h2><small>03</small>填写注册信息</h2>
+      <form id="register-form" class="glass-card" action="#" method="post" enctype="multipart/form-data">
         <fieldset>
           <legend>账号信息</legend>
 
@@ -73,7 +81,7 @@
 
           <!-- 单选框 + label 的 for+id 用法 -->
           <p>
-            性别：
+            <span class="field-label">性别：</span>
             <input type="radio" id="male" name="gender" value="male" checked>
             <label for="male">男</label>
             <input type="radio" id="female" name="gender" value="female">
@@ -118,11 +126,11 @@
 
           <!-- 复选框 + label 的包裹式用法 -->
           <p>
-            兴趣爱好：
-            <label><input type="checkbox" name="hobby" value="reading" checked> 阅读</label>
-            <label><input type="checkbox" name="hobby" value="music"> 音乐</label>
-            <label><input type="checkbox" name="hobby" value="sports"> 运动</label>
-            <label><input type="checkbox" name="hobby" value="coding"> 编程</label>
+            <span class="field-label">兴趣爱好：</span>
+            <label class="chip"><input type="checkbox" name="hobby" value="reading" checked> 阅读</label>
+            <label class="chip"><input type="checkbox" name="hobby" value="music"> 音乐</label>
+            <label class="chip"><input type="checkbox" name="hobby" value="sports"> 运动</label>
+            <label class="chip"><input type="checkbox" name="hobby" value="coding"> 编程</label>
           </p>
 
           <p>
@@ -140,7 +148,7 @@
         <fieldset>
           <legend>协议与提交</legend>
           <p>
-            <label><input type="checkbox" id="agree" name="agree" value="yes" required> 我已阅读并同意《用户服务协议》</label>
+            <label class="chip"><input type="checkbox" id="agree" name="agree" value="yes" required> 我已阅读并同意《用户服务协议》</label>
           </p>
           <p class="buttons">
             <button type="submit">注册</button>
@@ -155,59 +163,61 @@
 
     <!-- （3）表格：会员权益对比，含 thead/tbody/tfoot、th、rowspan 与 colspan -->
     <section id="rights">
-      <h2>四、会员权益对比</h2>
-      <table>
-        <caption>星辰社区会员等级权益对比表</caption>
-        <thead>
-          <tr>
-            <th scope="col">权益分类</th>
-            <th scope="col">权益项</th>
-            <th scope="col">普通用户</th>
-            <th scope="col">银卡会员</th>
-            <th scope="col">金卡会员</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="rowgroup" rowspan="2">存储服务</th>
-            <th scope="row">云存储空间</th>
-            <td>5 GB</td>
-            <td>50 GB</td>
-            <td>200 GB</td>
-          </tr>
-          <tr>
-            <th scope="row">单文件上传上限</th>
-            <td>100 MB</td>
-            <td>1 GB</td>
-            <td>5 GB</td>
-          </tr>
-          <tr>
-            <th scope="rowgroup" rowspan="2">服务支持</th>
-            <th scope="row">专属客服</th>
-            <td>无</td>
-            <td>工作日 9:00-18:00</td>
-            <td>7×24 小时</td>
-          </tr>
-          <tr>
-            <th scope="row">极速退款</th>
-            <td>不支持</td>
-            <td>3 个工作日</td>
-            <td>即时到账</td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <th scope="row">说明</th>
-            <td colspan="4">权益自注册成功之日起生效，有效期 12 个月；本行使用 colspan="4" 合并 4 个单元格。</td>
-          </tr>
-        </tfoot>
-      </table>
+      <h2><small>04</small>会员权益对比</h2>
+      <div class="table-wrap">
+        <table>
+          <caption>星辰社区会员等级权益对比表</caption>
+          <thead>
+            <tr>
+              <th scope="col">权益分类</th>
+              <th scope="col">权益项</th>
+              <th scope="col">普通用户</th>
+              <th scope="col">银卡会员</th>
+              <th scope="col" class="hl">金卡会员 ✨</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="rowgroup" rowspan="2">存储服务</th>
+              <th scope="row">云存储空间</th>
+              <td>5 GB</td>
+              <td>50 GB</td>
+              <td class="hl">200 GB</td>
+            </tr>
+            <tr>
+              <th scope="row">单文件上传上限</th>
+              <td>100 MB</td>
+              <td>1 GB</td>
+              <td class="hl">5 GB</td>
+            </tr>
+            <tr>
+              <th scope="rowgroup" rowspan="2">服务支持</th>
+              <th scope="row">专属客服</th>
+              <td>无</td>
+              <td>工作日 9:00-18:00</td>
+              <td class="hl">7×24 小时</td>
+            </tr>
+            <tr>
+              <th scope="row">极速退款</th>
+              <td>不支持</td>
+              <td>3 个工作日</td>
+              <td class="hl">即时到账</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row">说明</th>
+              <td colspan="4">权益自注册成功之日起生效，有效期 12 个月；本行使用 colspan="4" 合并 4 个单元格。</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
     </section>
 
     <!-- （4）列表三：定义列表 dl —— 常见问题 -->
     <section id="faq">
-      <h2>五、常见问题</h2>
-      <dl>
+      <h2><small>05</small>常见问题</h2>
+      <dl class="glass-faq">
         <dt>注册后多久可以使用？</dt>
         <dd>提交注册信息并通过邮箱验证后即可立即使用，无需人工审核。</dd>
         <dt>忘记密码怎么办？</dt>
@@ -274,7 +284,7 @@
       console.log("用户名：" + data.username + "，手机号：" + data.phone);
 
       // 同时把数据回显到页面上，方便查看与截图
-      result.innerHTML = "<h3>提交成功！收集到的数据如下：</h3><pre>" +
+      result.innerHTML = "<h3>🎉 注册成功！收集到的数据如下：</h3><pre>" +
         JSON.stringify(data, null, 2) +
         "</pre><p>请按 F12 打开 DevTools，在 Console 面板中查看同样的输出结果。</p>";
       result.classList.add("show");
@@ -285,6 +295,20 @@
       result.innerHTML = "";
       result.classList.remove("show");
       console.log("表单已重置");
+    });
+
+    // 视觉增强：滚动进入视口时淡入上浮（纯展示层效果，不影响表单逻辑）
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll("main section").forEach(function (sec) {
+      sec.classList.add("reveal");
+      observer.observe(sec);
     });
   </script>
 </body>

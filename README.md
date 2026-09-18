@@ -29,12 +29,23 @@ web-course-projects/
         └── 04-Console数据收集.png
 ```
 
+## 在线浏览（GitHub Pages）
+
+本仓库已开启 GitHub Pages，每个实验的页面可以直接在浏览器中打开，无需下载代码：
+
+| 实验 | 在线预览地址 |
+| --- | --- |
+| 实验1 个人简介 | <https://kilakiller.github.io/web-course-projects/%E5%AE%9E%E9%AA%8C1-%E4%B8%AA%E4%BA%BA%E7%AE%80%E4%BB%8B/> |
+| 实验2 用户注册页面 | <https://kilakiller.github.io/web-course-projects/%E5%AE%9E%E9%AA%8C2-%E6%B3%A8%E5%86%8C%E8%A1%A8%E5%8D%95/> |
+
+> 中文路径在地址栏会显示为 `%` 编码，属正常现象；Pages 由 `project1` 分支根目录发布，每次 push 后约 1-2 分钟自动更新。
+
 ## 作业列表
 
 | 实验 | 主题 | 主要内容 | 状态 |
 | --- | --- | --- | --- |
-| 实验1 | [个人简介](./实验1-个人简介/) | HTML 基础标签：标题、段落、`<strong>` / `<em>`、`<hr>`、`<img>`、`<a>` | 已完成 |
-| 实验2 | [用户注册页面](./实验2-注册表单/) | 列表（`<ul>` / `<ol>` / `<dl>`）、表格（`<thead>` / `<tbody>` / `rowspan` / `colspan`）、表单（各类 `<input>`、`<select>`、`<textarea>`、`required` / `pattern` 校验、FormData 数据收集） | 已完成 |
+| 实验1 | [个人简介](./实验1-个人简介/) · [在线浏览](https://kilakiller.github.io/web-course-projects/%E5%AE%9E%E9%AA%8C1-%E4%B8%AA%E4%BA%BA%E7%AE%80%E4%BB%8B/) | HTML 基础标签：标题、段落、`<strong>` / `<em>`、`<hr>`、`<img>`、`<a>` | 已完成 |
+| 实验2 | [用户注册页面](./实验2-注册表单/) · [在线浏览](https://kilakiller.github.io/web-course-projects/%E5%AE%9E%E9%AA%8C2-%E6%B3%A8%E5%86%8C%E8%A1%A8%E5%8D%95/) | 列表（`<ul>` / `<ol>` / `<dl>`）、表格（`<thead>` / `<tbody>` / `rowspan` / `colspan`）、表单（各类 `<input>`、`<select>`、`<textarea>`、`required` / `pattern` 校验、FormData 数据收集） | 已完成 |
 | 实验3 | 待添加 | — | 未开始 |
 
 ## 运行方式
