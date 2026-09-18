@@ -127,13 +127,22 @@
         <fieldset>
           <legend>个人资料</legend>
 
-          <!-- 复选框 + label 的包裹式用法 -->
-          <p>
+          <!-- 复选框 + label 的包裹式用法；自定义爱好的复选框由 JS 动态生成，name 同为 hobby -->
+          <p id="hobby-list">
             <span class="field-label">兴趣爱好：</span>
             <label class="chip"><input type="checkbox" name="hobby" value="reading" checked> 阅读</label>
             <label class="chip"><input type="checkbox" name="hobby" value="music"> 音乐</label>
             <label class="chip"><input type="checkbox" name="hobby" value="sports"> 运动</label>
             <label class="chip"><input type="checkbox" name="hobby" value="coding"> 编程</label>
+          </p>
+
+          <!-- 自定义兴趣爱好：label 的 for+id 用法 -->
+          <!-- 该输入框不设 name，因此不会进入 FormData，仅用于生成上面的复选框 -->
+          <p class="hobby-custom">
+            <label for="hobby-input">自定义爱好：</label>
+            <input type="text" id="hobby-input" maxlength="12" placeholder="输入你的爱好后按回车">
+            <button type="button" id="hobby-add">添加</button>
+            <span class="tip" id="hobby-tip">可自由添加，添加后自动勾选，点 × 删除</span>
           </p>
 
           <p>
@@ -293,10 +302,91 @@
       result.classList.add("show");
     });
 
-    // 重置时清空回显区
+    // 自定义兴趣爱好：动态生成 name="hobby" 的复选框，与预设选项一起被 FormData 收集
+    var hobbyList = document.getElementById("hobby-list");
+    var hobbyInput = document.getElementById("hobby-input");
+    var hobbyTip = document.getElementById("hobby-tip");
+
+    function showTip(msg, isWarn) {
+      hobbyTip.textContent = msg;
+      hobbyTip.style.color = isWarn ? "var(--cyan)" : "";
+      clearTimeout(showTip.timer);
+      showTip.timer = setTimeout(function () {
+        hobbyTip.textContent = "可自由添加，添加后自动勾选，点 × 删除";
+        hobbyTip.style.color = "";
+      }, 2500);
+    }
+
+    function addCustomHobby(rawText) {
+      var value = (rawText || "").trim().replace(/\s+/g, " ");
+      if (!value) {
+        showTip("请先输入爱好名称", true);
+        return;
+      }
+      // 去重：已存在同名选项则直接勾选，并闪烁提示
+      var existed = hobbyList.querySelectorAll('input[name="hobby"]');
+      for (var i = 0; i < existed.length; i++) {
+        if (existed[i].value === value) {
+          existed[i].checked = true;
+          var host = existed[i].parentNode;
+          host.classList.remove("flash");
+          void host.offsetWidth; // 强制重排，使动画可重复触发
+          host.classList.add("flash");
+          showTip("已有「" + value + "」，已为你勾选", true);
+          return;
+        }
+      }
+      // 生成新的复选框（label 包裹式写法）
+      var label = document.createElement("label");
+      label.className = "chip chip-custom";
+      var box = document.createElement("input");
+      box.type = "checkbox";
+      box.name = "hobby";
+      box.value = value;
+      box.checked = true;
+      label.appendChild(box);
+      label.appendChild(document.createTextNode(value));
+      var del = document.createElement("span");
+      del.className = "chip-del";
+      del.textContent = "×";
+      del.title = "删除该爱好";
+      // 阻止冒泡，避免点击删除时被 label 再次切换勾选状态
+      del.addEventListener("click", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        label.parentNode.removeChild(label);
+        showTip("已删除「" + value + "」", true);
+      });
+      label.appendChild(del);
+      hobbyList.appendChild(label);
+      showTip("已添加「" + value + "」并自动勾选", false);
+    }
+
+    document.getElementById("hobby-add").addEventListener("click", function () {
+      addCustomHobby(hobbyInput.value);
+      hobbyInput.value = "";
+    });
+
+    hobbyInput.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault(); // 回车时添加爱好，而不是提交整个表单
+        addCustomHobby(hobbyInput.value);
+        hobbyInput.value = "";
+      }
+    });
+
+    // 重置时清空回显区与用户自定义的爱好
     form.addEventListener("reset", function () {
       result.innerHTML = "";
       result.classList.remove("show");
+      // 延时执行，确保在浏览器恢复默认勾选状态之后清理
+      setTimeout(function () {
+        var customs = hobbyList.querySelectorAll("label.chip-custom");
+        for (var i = 0; i < customs.length; i++) {
+          customs[i].parentNode.removeChild(customs[i]);
+        }
+        hobbyInput.value = "";
+      }, 0);
       console.log("表单已重置");
     });
 

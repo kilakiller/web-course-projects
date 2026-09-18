@@ -520,6 +520,78 @@ label.chip:has(input:checked) {
   color: var(--text);
 }
 
+/* 自定义兴趣爱好：输入框 + 添加按钮 */
+p.hobby-custom {
+  flex-wrap: wrap;
+}
+
+p.hobby-custom label {
+  flex: 0 0 auto;
+}
+
+#hobby-input {
+  flex: 0 0 auto;
+  width: 210px;
+}
+
+#hobby-add {
+  flex: 0 0 auto;
+  width: auto;
+  padding: 7px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--cyan);
+  background: transparent;
+  color: var(--cyan);
+  font-size: 13.5px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.22s ease, color 0.22s ease;
+}
+
+#hobby-add:hover {
+  background: var(--cyan);
+  color: #04211d;
+}
+
+/* 动态生成的自定义爱好标签 */
+label.chip-custom {
+  padding-right: 10px;
+  animation: chip-in 0.25s ease;
+}
+
+.chip-del {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  margin-left: 2px;
+  border-radius: 50%;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--text-dim);
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.chip-del:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text);
+}
+
+@keyframes chip-in {
+  from { opacity: 0; transform: translateY(4px) scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes chip-flash {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(23, 225, 197, 0); }
+  35%      { box-shadow: 0 0 0 4px rgba(23, 225, 197, 0.28); }
+}
+
+label.chip.flash {
+  animation: chip-flash 0.6s ease;
+}
+
 /* 文件上传 */
 input[type="file"] {
   color: var(--text-dim);
