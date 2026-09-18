@@ -23,9 +23,10 @@
 ## 三、目录结构
 
 ```
-Web课程项目/
+实验1-个人简介/
 ├── index.html          # 主页面
 ├── README.md           # 作业说明
+├── screenshot.png      # 运行结果截图
 └── images/
     └── photo.png       # 个人照片（相对路径 ./images/photo.png 引用）
 ```
