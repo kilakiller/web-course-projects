@@ -22,14 +22,9 @@
       <a class="nav-cta" href="#register">立即加入</a>
     </nav>
 
-    <div class="hero-body">
-      <p class="hero-badge">HTML5 进阶综合训练 · 列表 / 表格 / 表单</p>
-      <div class="hero-title" id="hero-title">
-        <h1 class="base">加入 <span class="grad">星辰社区</span><br>开启你的 AI 创作之旅</h1>
-        <h1 class="spot" aria-hidden="true">加入 <span>星辰社区</span><br>开启你的 AI 创作之旅</h1>
-      </div>
-      <p class="hero-sub">一个为创作者而生的社区。注册仅需一分钟，即可解锁云端创作工具、灵感广场与全天候智能助手。</p>
-      <a class="hero-btn" href="#register">免费注册 →</a>
+    <!-- 页头：放大的 STAR 标志 + WebGL 网格扭曲，鼠标划过产生水波形变 -->
+    <div class="hero-stage" id="hero-stage">
+      <canvas id="hero-gd" role="img" aria-label="STAR 标志"></canvas>
     </div>
   </header>
 
@@ -243,6 +238,11 @@
   </main>
 
   <footer>
+    <!-- 尾页：Trae 官网同款实现 —— 巨型 STAR 字标 + 亮绿底直接绘成一张 WebGL 纹理，
+         整个舞台由同一个片元着色器渲染，鼠标拖动的就是字母本身的像素（UV 位移） -->
+    <div class="foot-stage" id="foot-stage">
+      <canvas id="foot-gd" role="img" aria-label="STAR"></canvas>
+    </div>
     <p>&copy; 2026 星辰社区 · Web应用开发技术实验 实验2</p>
     <p>软工2402 钟腾 24310210 | 本页仅用于 HTML5 课程练习</p>
   </footer>
@@ -404,41 +404,126 @@
       observer.observe(sec);
     });
 
-    // Hero 标题"聚光灯"效果：鼠标位置决定青色高亮的中心，带惯性跟随
-    // 原理：底层文字为暗色，上层同一份文字用 background-clip:text 填充青色，
-    // 并用径向渐变遮罩，遮罩圆心即鼠标位置；rAF 插值让跟随有阻尼感
+  </script>
+
+  <!-- （6）视觉升级：WebGL 鼠标动效（零依赖，原生实现）
+       页头标志：js/wave-distortion.js —— STAR 字标水波扭曲（径向位移 + 呼吸波纹）
+       尾页标志：js/grid-distortion.js —— 1:1 移植自 react-bits 的 GridDistortion（Trae 官网所用组件），
+          15×15 偏移网格 + 鼠标速度注入 + relaxation 回弹，参数沿用官方默认值 -->
+  <script src="js/wave-distortion.js"></script>
+  <script src="js/grid-distortion.js"></script>
+  <script>
     (function () {
-      if (window.matchMedia("(hover: none)").matches) return; // 触屏设备不启用
-      var wrap = document.getElementById("hero-title");
-      if (!wrap) return;
-      var target = { x: 50, y: 40 };   // 目标位置（百分比）
-      var cur = { x: 50, y: 40 };      // 当前位置（缓动用）
-      var raf = null;
+      // ---------- 页头：巨幅 STAR 字标贴图（透明底，1600x520 与画布等比） ----------
+      function buildHeroTexture() {
+        var w = 1600, h = 520;
+        var c = document.createElement("canvas");
+        c.width = w; c.height = h;
+        var x = c.getContext("2d");
 
-      function tick() {
-        cur.x += (target.x - cur.x) * 0.13;
-        cur.y += (target.y - cur.y) * 0.13;
-        wrap.style.setProperty("--mx", cur.x.toFixed(2) + "%");
-        wrap.style.setProperty("--my", cur.y.toFixed(2) + "%");
-        // 距离足够近时停止动画，节省性能
-        if (Math.abs(target.x - cur.x) > 0.05 || Math.abs(target.y - cur.y) > 0.05) {
-          raf = requestAnimationFrame(tick);
-        } else {
-          raf = null;
+        // 五角星路径
+        function starPath(cx, cy, outer, inner) {
+          x.beginPath();
+          for (var i = 0; i < 10; i++) {
+            var rad = (Math.PI / 5) * i - Math.PI / 2;
+            var rr = (i % 2 === 0) ? outer : inner;
+            var px = cx + Math.cos(rad) * rr;
+            var py = cy + Math.sin(rad) * rr;
+            if (i === 0) x.moveTo(px, py); else x.lineTo(px, py);
+          }
+          x.closePath();
         }
-      }
-      function kick() { if (!raf) raf = requestAnimationFrame(tick); }
 
-      var hero = document.querySelector("header.hero");
-      hero.addEventListener("mousemove", function (e) {
-        var r = wrap.getBoundingClientRect();
-        target.x = ((e.clientX - r.left) / r.width) * 100;
-        target.y = ((e.clientY - r.top) / r.height) * 100;
-        kick();
-      });
-      hero.addEventListener("mouseleave", function () {
-        target.x = 50; target.y = 40; kick();
-      });
+        // 先量字宽，把「星形 + STAR」作为整体水平居中
+        x.font = "900 300px 'Segoe UI', 'PingFang SC', 'Helvetica Neue', sans-serif";
+        var wordW = x.measureText("STAR").width;
+        var starR = 118;               // 星形外接圆半径
+        var gap = 70;                  // 星形与字标间距
+        var totalW = starR * 2 + gap + wordW;
+        var startX = (w - totalW) / 2;
+        var cy = h / 2 + 14;
+
+        // 五角星（青色发光）
+        starPath(startX + starR, cy, starR, starR * 0.42);
+        x.fillStyle = "#17e1c5";
+        x.shadowColor = "rgba(23,225,197,0.85)";
+        x.shadowBlur = 60;
+        x.fill();
+        x.shadowBlur = 0;
+
+        // STAR 字标（白到青渐变发光）
+        x.textAlign = "left";
+        x.textBaseline = "middle";
+        var g = x.createLinearGradient(startX + starR * 2 + gap, 0, startX + totalW, 0);
+        g.addColorStop(0, "#eafffb");
+        g.addColorStop(1, "#17e1c5");
+        x.fillStyle = g;
+        x.shadowColor = "rgba(23,225,197,0.6)";
+        x.shadowBlur = 48;
+        x.fillText("STAR", startX + starR * 2 + gap, cy);
+        x.shadowBlur = 0;
+        return c;
+      }
+
+      // ---------- 页头：STAR 字标水波渲染（WebGL 不可用时降级为静态文字）----------
+      try {
+        if (window.WaveDistortion && document.getElementById("hero-gd")) {
+          new WaveDistortion(document.getElementById("hero-gd"), {
+            image: buildHeroTexture(),
+            strength: 0.16,
+            radius: 0.5,
+            waveFreq: 12,
+            waveAmp: 0.045,
+            followEase: 0.12,
+            idleCenter: true
+          });
+        }
+      } catch (e) {
+        // WebGL 不可用时降级为静态文字标志
+        var stage = document.getElementById("hero-stage");
+        if (stage) stage.innerHTML = "<b class='hero-fallback'>STAR</b>";
+      }
+
+      // ---------- 尾页：Trae 官网 Grid Distortion（1:1 移植）----------
+      // 巨型 STAR 字标 + 亮绿底整张画成纹理，由官方同一套算法渲染：
+      // 15×15 偏移网格 + 鼠标速度注入 + relaxation 回弹，
+      // 字母被切成网格块，随鼠标被推走再弹回。
+      function buildFootTexture() {
+        var w = 1600, h = 520;
+        var c = document.createElement("canvas");
+        c.width = w; c.height = h;
+        var x = c.getContext("2d");
+
+        // 亮绿底（与 CSS 降级背景一致）
+        x.fillStyle = "#2fe377";
+        x.fillRect(0, 0, w, h);
+
+        // 巨型近黑 STAR 字标（Trae 尾页版式：粗体、撑满）
+        x.font = "900 350px 'Segoe UI', 'PingFang SC', 'Helvetica Neue', sans-serif";
+        x.textAlign = "center";
+        x.textBaseline = "middle";
+        x.fillStyle = "#07130c";
+        x.fillText("STAR", w / 2, h / 2 + 24);
+        return c;
+      }
+
+      try {
+        if (window.GridDistortion && document.getElementById("foot-gd")) {
+          new GridDistortion(document.getElementById("foot-gd"), {
+            image: buildFootTexture(),
+            // 与 Trae 官网 react-bits GridDistortion 完全一致的默认参数
+            grid: 15,
+            mouse: 0.1,
+            strength: 0.15,
+            relaxation: 0.9,
+            pointerEl: document.getElementById("foot-stage")
+          });
+        }
+      } catch (e) {
+        // WebGL 不可用时降级为静态绿色背景 + 大字
+        var stage = document.getElementById("foot-stage");
+        if (stage) stage.innerHTML = "<b class='foot-fallback'>STAR</b>";
+      }
     })();
   </script>
 </body>
