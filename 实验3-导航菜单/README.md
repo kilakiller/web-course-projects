@@ -7,7 +7,7 @@ Web应用开发技术实验 · 软工2402
 | 文件 | 说明 |
 | --- | --- |
 | `一级菜单.html` | 表格布局的一级水平导航菜单（HTML 结构为题目提供，未修改，仅添加 CSS） |
-| `二级菜单.html` | ul/li 嵌套结构的二级下拉导航菜单（HTML 结构为题目提供，未修改，仅添加 CSS） |
+| `二级菜单.html` | 基于学校官网视觉体系重新设计的二级下拉导航菜单（纯 CSS 实现，无 JS） |
 | `images/` | 浏览器实际运行效果截图 |
 
 ## 运行效果
@@ -26,11 +26,14 @@ Web应用开发技术实验 · 软工2402
 
 ## 实现要点
 
-- **水平排列**：菜单项使用 `display: inline-block`，不脱离文档流，可正常设置宽高与内外边距；父级 `ul` 设置 `font-size: 0` 消除 inline-block 的空白间隙，`li` 上恢复字号。
-- **盒模型**：`a` 标签转为块级元素并用 `padding` 扩大可点击区域；`border` 用于顶部横幅装饰线。
-- **hover 伪类**：`td a:hover` / `li:hover > a` 实现一级菜单悬停变色；`li:hover > ul` 控制二级菜单显示。
-- **二级菜单定位**：父级 `li` 设置 `position: relative`，二级 `ul` 设置 `position: absolute; left: 0; top: 100%`，默认 `display: none` 隐藏，悬停时显示。
-- **选择器综合应用**：类选择器（`.logo`）、后代选择器（`td a`）、子选择器（`>`）、伪类选择器（`:hover`、`:last-of-type`）等。
+**一级菜单**
+- `td a` 转为块级元素并用 `padding` 扩大可点击区域；`border-collapse: collapse` 消除表格单元格间隙；`:hover` 悬停变色。
+
+**二级菜单（官网风格改版）**
+- **水平排列**：`display: flex` + `justify-content: center`，无需处理 inline-block 空白缝隙，增删菜单项自动适应。
+- **视觉体系**：校红 `#a3050f` + 深蓝 `#1e3d8f` 取自学校官网；宋体校名 + 朱文印章“湖南文理”作标识；白底通栏导航配红色下划线（从左侧生长）。
+- **下拉定位**：父级 `li` 设 `position: relative`，二级 `ul` 设 `position: absolute; top: 100%; left: 50%`，配合 `transform: translateX(-50%)` 水平居中。
+- **过渡动画**：用 `visibility` + `opacity` + `transform: translateY` 组合替代 `display: none` 切换，实现下拉淡入上移效果。
 
 ## 运行方式
 
