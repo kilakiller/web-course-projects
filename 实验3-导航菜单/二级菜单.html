@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二级水平导航菜单</title>
+    <style>
+        /* ========== 全局基础（元素选择器 + 通配选择器） ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "SimHei", sans-serif;
+            background-color: #f0f2f5;
+        }
+
+        /* 去掉所有列表的默认项目符号 */
+        ul {
+            list-style: none;
+        }
+
+        /* ========== 顶部欢迎横幅（类选择器 li.logo） ========== */
+        li.logo {
+            height: 90px;
+            line-height: 90px;                  /* 行高 = 高度，实现文字垂直居中 */
+            padding-left: 40px;
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #0f4c8c;
+            background-color: #ffffff;
+            border-bottom: 3px solid #0f4c8c;  /* 盒模型：border 做装饰线 */
+        }
+
+        /* ========== 导航条（第二个 ul：ul:last-of-type） ========== */
+        body > ul:last-of-type {
+            background-color: #0f4c8c;          /* 深蓝色导航条背景 */
+            padding-left: 40px;
+            font-size: 0;                       /* 消除 inline-block 的空白间隙 */
+        }
+
+        /* 一级菜单项水平排列 */
+        body > ul:last-of-type > li {
+            display: inline-block;              /* 水平排列的关键 */
+            position: relative;                 /* 作为二级菜单绝对定位的参照物 */
+            font-size: 16px;                    /* 恢复字号（抵消父级 font-size:0） */
+        }
+
+        body > ul:last-of-type > li a {
+            display: block;                     /* 撑满 li，扩大可点击区域 */
+            padding: 12px 24px;
+            color: #ffffff;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        /* :hover 伪类：悬停一级菜单时背景变化 */
+        body > ul:last-of-type > li:hover > a {
+            background-color: #e60012;
+        }
+
+        /* ========== 二级下拉菜单（绝对定位） ========== */
+        body > ul:last-of-type > li ul {
+            position: absolute;                 /* 相对于 position:relative 的父级 li 定位 */
+            left: 0;
+            top: 100%;                          /* 紧贴父菜单项的下边缘 */
+            display: none;                      /* 默认隐藏 */
+            min-width: 100%;                    /* 至少与父菜单同宽 */
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        body > ul:last-of-type > li ul li {
+            display: block;                     /* 二级菜单项垂直排列 */
+        }
+
+        body > ul:last-of-type > li ul li a {
+            color: #333333;
+            padding: 10px 20px;
+        }
+
+        body > ul:last-of-type > li ul li a:hover {
+            background-color: #0f4c8c;
+            color: #ffffff;
+        }
+
+        /* :hover 伪类：悬停一级菜单时显示对应的二级菜单 */
+        body > ul:last-of-type > li:hover > ul {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li class="logo">欢迎访问湖南文理学院</li>
+    </ul>
+    <ul>         
+        <li><a href="#">首页</a></li>
+        <li><a href="#">教学院(部)</a>
+            <ul>
+                <li><a href="#">计算机与电气工程学院</a></li>
+                <li><a href="#">芙蓉学院</a></li>
+            </ul>
+        </li>
+        <li><a href="#">党群机构</a></li>        
+        <li><a href="#">行政教辅机构</a></li>
+        <li><a href="#">教学科研</a></li>
+        <li><a href="#">招生就业</a></li>
+        <li><a href="#">国际交流</a></li>
+        <li><a href="#">数字图书馆</a></li>
+    </ul>    
+</body>
+</html>

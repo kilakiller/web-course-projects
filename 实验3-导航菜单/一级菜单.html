@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一级水平导航菜单</title>
+    <style>
+        /* ========== 全局基础（元素选择器） ========== */
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "SimHei", sans-serif;
+            background-color: #f0f2f5;
+            padding-top: 40px;
+        }
+
+        /* ========== 一级水平导航菜单（表格布局） ========== */
+        /* 合并表格边框，消除单元格之间的默认间隙 */
+        table {
+            border-collapse: collapse;
+        }
+
+        /* 每个菜单单元格：深蓝色背景（并集选择器统一设置） */
+        table td {
+            background-color: #0f4c8c;
+        }
+
+        /* 后代选择器：td 中的超链接 */
+        table td a {
+            display: block;              /* 转为块级元素，撑满整个单元格 */
+            padding: 12px 24px;          /* 盒模型：padding 扩大可点击区域 */
+            color: #ffffff;
+            font-size: 16px;
+            text-decoration: none;       /* 去掉下划线 */
+            white-space: nowrap;         /* 禁止菜单文字换行 */
+        }
+
+        /* :hover 伪类：鼠标悬停时改变背景颜色 */
+        table td a:hover {
+            background-color: #e60012;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <table align="center">
+        <tr>           
+            <td><a href="#">首页</a></td>
+            <td><a href="#">教学院(部)</a></td>
+            <td><a href="#">党群机构</a></td>
+            <td><a href="#">行政教辅机构</a></td>
+            <td><a href="#">教学科研</a></td>
+            <td><a href="#">招生就业</a></td>
+            <td><a href="#">国际交流</a></td>
+            <td><a href="#">数字图书馆</a></td>
+        </tr>
+    </table>
+    
+</body>
+</html>
